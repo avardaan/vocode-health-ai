@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "patient-intake-agent"
+version = "0.1.0"
+description = ""
+authors = ["avardaan <oyevardaan@gmail.com>"]
+readme = "README.md"
+packages = [{include = "patient_intake_agent"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+vocode = {version = "0.1.111a2", extras = ["io"]}
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
