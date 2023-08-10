@@ -1,10 +1,6 @@
 import os
 from dotenv import load_dotenv
-import asyncio
-import signal
 from fastapi import FastAPI
-from vocode.helpers import create_streaming_microphone_input_and_speaker_output
-from vocode.streaming.streaming_conversation import StreamingConversation
 import vocode
 
 from patient_intake_agent.inbound_call_engine import create_inbound_telephony_server

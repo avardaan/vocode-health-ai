@@ -10,9 +10,7 @@ class CustomEventsManager(events_manager.EventsManager):
     def __init__(self):
         super().__init__(
             subscriptions=[
-                EventType.PHONE_CALL_CONNECTED,
-                EventType.PHONE_CALL_ENDED,
-                EventType.TRANSCRIPT,
+                # EventType.TRANSCRIPT,
                 EventType.TRANSCRIPT_COMPLETE,
             ]
         )
