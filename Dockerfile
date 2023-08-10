@@ -21,7 +21,8 @@ WORKDIR /app
 
 # Copy the `pyproject.toml` and `poetry.lock` to install dependencies
 COPY pyproject.toml poetry.lock /app/
-# Copy the content of the local `src` directory to the working directory
+
+# Copy the content of the local directory to the working directory
 COPY . /app/
 
 # Install project dependencies
