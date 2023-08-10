@@ -35,6 +35,7 @@ def create_inbound_telephony_server() -> TelephonyServer:
     custom_agent_config = ChatGPTAgentConfig(
         temperature=0.9,
         max_tokens=1024,
+        allowed_idle_time_seconds=30,
         initial_message=BaseMessage(text=INITIAL_MESSAGE),
         prompt_preamble=PROMPT_PREAMBLE,
         generate_responses=True,
