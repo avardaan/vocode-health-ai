@@ -7,7 +7,10 @@ from vocode.streaming.models.transcriber import *
 from vocode.streaming.models.agent import *
 from vocode.streaming.models.synthesizer import *
 from vocode.streaming.models.message import BaseMessage
-from vocode.streaming.telephony.server.base import TelephonyServer
+from vocode.streaming.telephony.server.base import TelephonyServer, InboundCallConfig
+from vocode.streaming.telephony.config_manager.redis_config_manager import (
+    RedisConfigManager,
+)
 from vocode.streaming.telephony.hosted.inbound_call_server import InboundCallServer
 from vocode.streaming.models.telephony import TwilioConfig
 
@@ -15,24 +18,26 @@ from patient_intake_agent.constants import INITIAL_MESSAGE, PROMPT_PREAMBLE
 from patient_intake_agent.logger import logger
 from patient_intake_agent.events_manager import custom_events_manager
 
+BASE_URL = os.getenv("BASE_URL")
+config_manager = RedisConfigManager(logger=logger)
 
-# def create_inbound_telephony_server() -> TelephonyServer:
-#     return TelephonyServer(
-#     base_url=BASE_URL,
-#     config_manager=config_manager,
-#     inbound_call_configs=[
-#         InboundCallConfig(
-#             url="/inbound_call",
-#             agent_config=ChatGPTAgentConfig(
-#                 initial_message=BaseMessage(text="What up"),
-#                 prompt_preamble="Have a pleasant conversation about life",
-#                 generate_responses=True,
-#             ),
-#         )
-#     ],
-#     agent_factory=SpellerAgentFactory(),
-#     logger=logger,
-# )
+
+def create_inbound_telephony_server() -> TelephonyServer:
+    return TelephonyServer(
+        base_url=BASE_URL,
+        config_manager=config_manager,
+        inbound_call_configs=[
+            InboundCallConfig(
+                url="/vocode",
+                agent_config=ChatGPTAgentConfig(
+                    initial_message=BaseMessage(text="What up"),
+                    prompt_preamble="Have a pleasant conversation about life",
+                    generate_responses=True,
+                ),
+            )
+        ],
+        logger=logger,
+    )
 
 
 def create_inbound_call_server():
