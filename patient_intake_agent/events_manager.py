@@ -4,8 +4,6 @@ from vocode.streaming.utils import events_manager
 from vocode.streaming.models.events import Event, EventType
 from vocode.streaming.models.transcript import TranscriptCompleteEvent
 
-from patient_intake_agent.transcript_parser import get_patient_data_from_transcript
-
 
 class InboundCallEventsManager(events_manager.EventsManager):
     def __init__(self):
@@ -24,10 +22,6 @@ class InboundCallEventsManager(events_manager.EventsManager):
                     include_timestamps=False
                 ),
             )
-            # cid = transcript_complete_event.conversation_id
-            # parsed_patient_data = get_patient_data_from_transcript(
-            #     transcript_complete_event.transcript.to_string(include_timestamps=False)
-            # )
 
 
 inbound_call_events_manager = InboundCallEventsManager()

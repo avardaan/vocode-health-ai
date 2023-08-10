@@ -38,6 +38,11 @@ def create_inbound_telephony_server() -> TelephonyServer:
         prompt_preamble=PROMPT_PREAMBLE,
         end_conversation_on_goodbye=True,
         temperature=0.5,
+        send_filler_audio=FillerAudioConfig(
+            silence_threshold_seconds=FILLER_AUDIO_DEFAULT_SILENCE_THRESHOLD_SECONDS,
+            use_phrases=False,
+            use_typing_noise=True,
+        ),
     )
 
     custom_synthesizer_config = AzureSynthesizerConfig(

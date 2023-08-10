@@ -1,25 +1,3 @@
-from pydantic import BaseModel
-from typing import Optional
-
-
-class _Insurance(BaseModel):
-    payer_name: Optional[str]
-    member_id: Optional[str]
-
-
-class _Referral(BaseModel):
-    has_referral: Optional[bool]
-    to_provider: Optional[str]
-
-
-class PatientData(BaseModel):
-    first_name: Optional[str]
-    last_name: Optional[str]
-    insurance: Optional[_Insurance]
-    referral: Optional[_Referral]
-    chief_complaint: Optional[str]
-
-
 PATIENT_DATA_JSON = {
     "first_name": None,
     "last_name": None,
@@ -40,7 +18,7 @@ INITIAL_MESSAGE = "Hello! I am Vardaan, your intake agent. \
     Once you are registered, I will help you schedule an appointment with a doctor. To begin, please say ok."
 
 AGENT_GOAL_DESCRIPTION = (
-    f"""Retrieve patient information and schedule an appointment with a doctor."""
+    f"""Retrieve all patient information and schedule an appointment with a doctor."""
 )
 
 PROMPT_PREAMBLE = f"""
@@ -48,8 +26,9 @@ PROMPT_PREAMBLE = f"""
 
 Here is the context for the call:
 Intended goal: {AGENT_GOAL_DESCRIPTION}
-Information to be collected: {PatientData().dict()}
+Information to be collected: {PATIENT_DATA_JSON}
 
 Do not answer questions that are not relevant to the  intended goal. If the caller is not cooperative, 
-gently bring them back on track.
+gently bring them back on track. After each of the user's responses, please continue asking
+the next question withouy any prompting.
         """
