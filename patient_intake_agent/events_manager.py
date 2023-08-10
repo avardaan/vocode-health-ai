@@ -19,13 +19,15 @@ class InboundCallEventsManager(events_manager.EventsManager):
     def handle_event(self, event: Event):
         if event.type == EventType.TRANSCRIPT_COMPLETE:
             transcript_complete_event = typing.cast(TranscriptCompleteEvent, event)
-            # cid = transcript_complete_event.conversation_id
-            parsed_patient_data = get_patient_data_from_transcript(
-                transcript_complete_event.transcript.to_string(include_timestamps=False)
+            logger.info(
+                transcript_complete_event.transcript.to_string(
+                    include_timestamps=False
+                ),
             )
-            # logger.info(
-            #     f"Patient data parsed from transcript: {parsed_patient_data.json()}"
+            # cid = transcript_complete_event.conversation_id
+            # parsed_patient_data = get_patient_data_from_transcript(
+            #     transcript_complete_event.transcript.to_string(include_timestamps=False)
             # )
 
 
-custom_events_manager = InboundCallEventsManager()
+inbound_call_events_manager = InboundCallEventsManager()

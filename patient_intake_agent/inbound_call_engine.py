@@ -15,7 +15,7 @@ from vocode.streaming.models.telephony import TwilioConfig
 
 from patient_intake_agent.constants import INITIAL_MESSAGE, PROMPT_PREAMBLE
 from patient_intake_agent.logger import logger
-from patient_intake_agent.events_manager import custom_events_manager
+from patient_intake_agent.events_manager import inbound_call_events_manager
 
 
 def create_inbound_telephony_server() -> TelephonyServer:
@@ -37,6 +37,7 @@ def create_inbound_telephony_server() -> TelephonyServer:
         initial_message=BaseMessage(text=INITIAL_MESSAGE),
         prompt_preamble=PROMPT_PREAMBLE,
         end_conversation_on_goodbye=True,
+        temperature=0.5,
     )
 
     custom_synthesizer_config = AzureSynthesizerConfig(
@@ -57,5 +58,5 @@ def create_inbound_telephony_server() -> TelephonyServer:
         config_manager=config_manager,
         inbound_call_configs=[custom_inbound_call_config],
         logger=logger,
-        events_manager=custom_events_manager,
+        events_manager=inbound_call_events_manager,
     )
