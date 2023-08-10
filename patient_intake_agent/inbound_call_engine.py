@@ -1,5 +1,4 @@
 import os
-from vocode.streaming.streaming_conversation import StreamingConversation
 from vocode.streaming.transcriber import *
 from vocode.streaming.agent import *
 from vocode.streaming.synthesizer import *
@@ -34,10 +33,13 @@ def create_inbound_telephony_server() -> TelephonyServer:
     )
 
     custom_agent_config = ChatGPTAgentConfig(
+        temperature=0.9,
+        max_tokens=1024,
         initial_message=BaseMessage(text=INITIAL_MESSAGE),
         prompt_preamble=PROMPT_PREAMBLE,
+        generate_responses=True,
         end_conversation_on_goodbye=True,
-        temperature=0.5,
+        allow_agent_to_be_cut_off=False,
         send_filler_audio=FillerAudioConfig(
             silence_threshold_seconds=FILLER_AUDIO_DEFAULT_SILENCE_THRESHOLD_SECONDS,
             use_phrases=False,

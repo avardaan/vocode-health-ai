@@ -12,23 +12,48 @@ PATIENT_DATA_JSON = {
     "chief_complaint": None,
 }
 
+PATIENT_DATA_FLAT_FIELDS = [
+    "first_name",
+    "last_name",
+    # "insurance.payer_name",
+    # "insurance.member_id",
+    # "referral.has_referral",
+    # "referral.to_provider",
+    # "chief_complaint",
+]
+
+AVAILABLE_APPOINTMENTS = [
+    {
+        "provider": "John Doe",
+        "date": "2023-09-01",
+        "time": "10:00 AM",
+    },
+    {
+        "provider": "Jane Doe",
+        "date": "2023-09-01",
+        "time": "11:00 AM",
+    },
+]
 
 INITIAL_MESSAGE = "Hello! I am Vardaan, your intake agent. \
   To help you get the care you need, I will be asking you a series of questions to process your registration. \
     Once you are registered, I will help you schedule an appointment with a doctor. To begin, please say ok."
 
-AGENT_GOAL_DESCRIPTION = (
-    f"""Retrieve all patient information and schedule an appointment with a doctor."""
-)
+AGENT_GOAL_DESCRIPTION = f"""Retrieve patient information sequentially by going through the provided fields. Once all fields are retrieved,
+help the patient schedule an appointment with a doctor."""
 
 PROMPT_PREAMBLE = f"""
         The AI is a friendly phone bot built for information intake via inbound calls from patients.
+        It goes through a list of fields to collect information from the patient. After collecting each
+        field, it repeats the information back to the patient and asks for confirmation. If the patient
+        confirms, it moves on to the next field. If the patient denies, it asks the patient to repeat
+        the information. Once all fields have been collected, it helps the patient schedule an appointment with a doctor.
 
 Here is the context for the call:
 Intended goal: {AGENT_GOAL_DESCRIPTION}
-Information to be collected: {PATIENT_DATA_JSON}
+Information to be collected in order sequentially: {PATIENT_DATA_FLAT_FIELDS}
+Available appointments with doctors: {AVAILABLE_APPOINTMENTS}
 
 Do not answer questions that are not relevant to the  intended goal. If the caller is not cooperative, 
-gently bring them back on track. After each of the user's responses, please continue asking
-the next question withouy any prompting.
+gently bring them back on track.
         """

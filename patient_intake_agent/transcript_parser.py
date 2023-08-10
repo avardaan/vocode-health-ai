@@ -1,9 +1,8 @@
 import os
 import openai
-from patient_intake_agent.constants import PATIENT_DATA_JSON
 
 
-def get_patient_data_from_transcript(call_transcript: str):
+def get_patient_data_from_transcript(call_transcript: str, structured_output: dict):
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
     response = openai.ChatCompletion.create(
@@ -15,7 +14,7 @@ def get_patient_data_from_transcript(call_transcript: str):
               intake bot agent and a human. You will also be given an output JSON shape with empty values. 
               Your task is to parse the call transcript and output a JSON in the desired shape with the 
               appropriate values filled from the human\'s responses. Values that are not provided by the 
-              human may remain None.\nOutput JSON shape - {PATIENT_DATA_JSON}""",
+              human may remain None.\nOutput JSON shape - {structured_output}""",
             },
             {
                 "role": "user",
