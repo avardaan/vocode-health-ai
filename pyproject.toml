@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["avardaan <oyevardaan@gmail.com>"]
 readme = "README.md"
-packages = [{include = "patient_intake_agent"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"

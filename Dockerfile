@@ -22,11 +22,11 @@ WORKDIR /app
 # Copy the `pyproject.toml` and `poetry.lock` to install dependencies
 COPY pyproject.toml poetry.lock /app/
 
-# Copy the content of the local directory to the working directory
-COPY . /app/
-
 # Install project dependencies
 RUN poetry install --no-interaction --no-ansi
+
+# Copy the content of the local directory to the working directory
+COPY . /app/
 
 EXPOSE 3000
 # Specify the command to run on container start
