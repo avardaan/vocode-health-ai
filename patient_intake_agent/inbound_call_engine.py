@@ -18,25 +18,28 @@ from patient_intake_agent.constants import INITIAL_MESSAGE, PROMPT_PREAMBLE
 from patient_intake_agent.logger import logger
 from patient_intake_agent.events_manager import custom_events_manager
 
-BASE_URL = os.getenv("BASE_URL")
-config_manager = RedisConfigManager(logger=logger)
-
 
 def create_inbound_telephony_server() -> TelephonyServer:
+    BASE_URL = os.getenv("BASE_URL")
+    config_manager = RedisConfigManager()
+
+    custom_inbound_call_config: InboundCallConfig = InboundCallConfig(
+        url="/inbound",
+        agent_config=ChatGPTAgentConfig(
+            initial_message=BaseMessage(
+                text="Hi, I am ChatGPT, programmed by Vardaan! How can I help you today?"
+            ),
+            prompt_preamble="Answer any questions the user has",
+            generate_responses=True,
+        ),
+    )
+
     return TelephonyServer(
         base_url=BASE_URL,
         config_manager=config_manager,
-        inbound_call_configs=[
-            InboundCallConfig(
-                url="/vocode",
-                agent_config=ChatGPTAgentConfig(
-                    initial_message=BaseMessage(text="What up"),
-                    prompt_preamble="Have a pleasant conversation about life",
-                    generate_responses=True,
-                ),
-            )
-        ],
+        inbound_call_configs=[custom_inbound_call_config],
         logger=logger,
+        events_manager=custom_events_manager,
     )
 
 

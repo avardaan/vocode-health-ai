@@ -12,8 +12,6 @@ from patient_intake_agent.inbound_call_engine import create_inbound_telephony_se
 # load environment variables from .env file
 load_dotenv()
 
-http_server = FastAPI(docs_url=None)
-
 vocode.setenv(
     BASE_URL=os.getenv("BASE_URL"),
     OPENAI_API_KEY=os.getenv("OPENAI_API_KEY"),
@@ -22,6 +20,9 @@ vocode.setenv(
     AZURE_SPEECH_REGION=os.getenv("AZURE_SPEECH_REGION"),
 )
 
-if __name__ == "__main__":
-    inbound_call_server = create_inbound_telephony_server()
-    http_server.include_router(inbound_call_server.get_router())
+# init http server
+app = FastAPI()
+# create inbound call server
+inbound_call_server = create_inbound_telephony_server()
+# attach to http server
+app.include_router(inbound_call_server.get_router())

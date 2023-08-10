@@ -8,11 +8,17 @@ from vocode.streaming.models.events import (
 
 class CustomEventsManager(events_manager.EventsManager):
     def __init__(self):
-        super().__init__(subscriptions=[EventType.TRANSCRIPT, EventType.TRANSCRIPT_COMPLETE])
+        super().__init__(
+            subscriptions=[
+                EventType.PHONE_CALL_CONNECTED,
+                EventType.PHONE_CALL_ENDED,
+                EventType.TRANSCRIPT,
+                EventType.TRANSCRIPT_COMPLETE,
+            ]
+        )
 
     def handle_event(self, event: Event):
         logger.info(event)
 
 
 custom_events_manager = CustomEventsManager()
-
