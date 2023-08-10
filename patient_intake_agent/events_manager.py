@@ -15,3 +15,4 @@ class CustomEventsManager(events_manager.EventsManager):
 
 
 custom_events_manager = CustomEventsManager()
+
