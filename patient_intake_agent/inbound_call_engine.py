@@ -7,12 +7,32 @@ from vocode.streaming.models.transcriber import *
 from vocode.streaming.models.agent import *
 from vocode.streaming.models.synthesizer import *
 from vocode.streaming.models.message import BaseMessage
+from vocode.streaming.telephony.server.base import TelephonyServer
 from vocode.streaming.telephony.hosted.inbound_call_server import InboundCallServer
 from vocode.streaming.models.telephony import TwilioConfig
 
 from patient_intake_agent.constants import INITIAL_MESSAGE, PROMPT_PREAMBLE
 from patient_intake_agent.logger import logger
 from patient_intake_agent.events_manager import custom_events_manager
+
+
+# def create_inbound_telephony_server() -> TelephonyServer:
+#     return TelephonyServer(
+#     base_url=BASE_URL,
+#     config_manager=config_manager,
+#     inbound_call_configs=[
+#         InboundCallConfig(
+#             url="/inbound_call",
+#             agent_config=ChatGPTAgentConfig(
+#                 initial_message=BaseMessage(text="What up"),
+#                 prompt_preamble="Have a pleasant conversation about life",
+#                 generate_responses=True,
+#             ),
+#         )
+#     ],
+#     agent_factory=SpellerAgentFactory(),
+#     logger=logger,
+# )
 
 
 def create_inbound_call_server():
@@ -51,11 +71,23 @@ def create_inbound_call_server():
         endpointing_config=PunctuationEndpointingConfig(),
     )
 
+    general_agent_config: AgentConfig = AgentConfig(
+        initial_message=BaseMessage(text=INITIAL_MESSAGE),
+        prompt_preamble=PROMPT_PREAMBLE,
+        track_bot_sentiment=True,
+    )
+
+    general_synthesizer_config: SynthesizerConfig = SynthesizerConfig(
+        sampling_rate=DEFAULT_SAMPLING_RATE,
+        audio_encoding=DEFAULT_AUDIO_ENCODING,
+    )
+
     return InboundCallServer(
         twilio_config=twilio_config,
-        transcriber_config=general_transcriber_config,
-        agent_config=custom_agent.get_agent_config(),
-        synthesizer_config=custom_synthesizer.get_synthesizer_config(),
+        agent_config=EchoAgentConfig(initial_message=BaseMessage(text="hello!"))
+        # transcriber_config=general_transcriber_config,
+        # agent_config=general_agent_config,
+        # synthesizer_config=general_synthesizer_config,
     )
 
     return StreamingConversation(

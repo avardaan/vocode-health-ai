@@ -11,6 +11,9 @@ __pycache__/
 *.pyd
 *.pyo
 
+# Other
+notes.md
+
 # Dist
 dist/
 build/
