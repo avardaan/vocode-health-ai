@@ -7,8 +7,8 @@ from vocode.streaming.models.agent import *
 from vocode.streaming.models.synthesizer import *
 from vocode.streaming.models.message import BaseMessage
 from vocode.streaming.telephony.server.base import TelephonyServer, InboundCallConfig
-from vocode.streaming.telephony.config_manager.redis_config_manager import (
-    RedisConfigManager,
+from vocode.streaming.telephony.config_manager.in_memory_config_manager import (
+    InMemoryConfigManager,
 )
 from vocode.streaming.models.telephony import TwilioConfig
 
@@ -19,7 +19,7 @@ from patient_intake_agent.events_manager import inbound_call_events_manager
 
 def create_inbound_telephony_server() -> TelephonyServer:
     BASE_URL = os.getenv("BASE_URL")
-    config_manager = RedisConfigManager(logger=logger)
+    config_manager = InMemoryConfigManager()
 
     custom_twilio_config = TwilioConfig(
         account_sid=os.getenv("TWILIO_ACCOUNT_SID"),
