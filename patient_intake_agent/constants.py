@@ -1,4 +1,4 @@
-PATIENT_DATA_JSON = {
+PATIENT_DATA_TO_COLLECT = {
     "first_name": None,
     "last_name": None,
     "insurance": {
@@ -10,16 +10,35 @@ PATIENT_DATA_JSON = {
         "to_provider": None,
     },
     "chief_complaint": None,
+    "address": {
+        "street": None,
+        "unit": None,
+        "city": None,
+        "state": None,
+        "zip": None,
+    },
+    "contact": {
+        "phone": None,
+        "email": None,
+    },
 }
 
-PATIENT_DATA_FLAT_FIELDS = [
+# TODO: derive programmatically from PATIENT_DATA_JSON
+PATIENT_DATA_FIELDS = [
     "first_name",
     "last_name",
-    # "insurance.payer_name",
-    # "insurance.member_id",
-    # "referral.has_referral",
-    # "referral.to_provider",
-    # "chief_complaint",
+    "insurance.payer_name",
+    "insurance.member_id",
+    "referral.has_referral",
+    "referral.to_provider",
+    "chief_complaint",
+    "address.street",
+    "address.unit",
+    "address.city",
+    "address.state",
+    "address.zip",
+    "contact.phone",
+    "contact.email",
 ]
 
 AVAILABLE_APPOINTMENTS = [
@@ -43,15 +62,14 @@ AGENT_GOAL_DESCRIPTION = f"""Retrieve patient information sequentially by going 
 help the patient schedule an appointment with a doctor."""
 
 PROMPT_PREAMBLE = f"""
-        The AI is a friendly phone bot built for information intake via inbound calls from patients.
-        It goes through a list of fields to collect information from the patient. After collecting each
-        field, it repeats the information back to the patient and asks for confirmation. If the patient
-        confirms, it moves on to the next field. If the patient denies, it asks the patient to repeat
-        the information. Once all fields have been collected, it helps the patient schedule an appointment with a doctor.
+        You are a friendly phone bot built for information intake via inbound calls from patients.
+        You will go through a list of fields to collect information from the user. After collecting each
+        field, you will ask for confirmation. If the user confirms, move on to the next field. If the user denies, ask them to repeat
+        the information. Once all fields have been collected, help the patient schedule an appointment with a doctor.
 
 Here is the context for the call:
 Intended goal: {AGENT_GOAL_DESCRIPTION}
-Information to be collected in order sequentially: {PATIENT_DATA_FLAT_FIELDS}
+Information to be collected in order sequentially: {PATIENT_DATA_FIELDS}
 Available appointments with doctors: {AVAILABLE_APPOINTMENTS}
 
 Do not answer questions that are not relevant to the  intended goal. If the caller is not cooperative, 

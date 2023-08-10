@@ -38,7 +38,7 @@ def create_inbound_telephony_server() -> TelephonyServer:
         initial_message=BaseMessage(text=INITIAL_MESSAGE),
         prompt_preamble=PROMPT_PREAMBLE,
         generate_responses=True,
-        end_conversation_on_goodbye=True,
+        # end_conversation_on_goodbye=True,
         allow_agent_to_be_cut_off=False,
         send_filler_audio=FillerAudioConfig(
             silence_threshold_seconds=FILLER_AUDIO_DEFAULT_SILENCE_THRESHOLD_SECONDS,
