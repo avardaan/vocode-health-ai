@@ -26,36 +26,30 @@ def create_inbound_telephony_server() -> TelephonyServer:
         account_sid=os.getenv("TWILIO_ACCOUNT_SID"),
         auth_token=os.getenv("TWILIO_AUTH_TOKEN"),
     )
-    custom_transcriber = DeepgramTranscriber(
-        DeepgramTranscriberConfig(
-            endpointing_config=PunctuationEndpointingConfig(),
-            sampling_rate=DEFAULT_SAMPLING_RATE,
-            audio_encoding=DEFAULT_AUDIO_ENCODING,
-            chunk_size=DEFAULT_CHUNK_SIZE,
-        )
+    custom_transcriber_config = DeepgramTranscriberConfig(
+        endpointing_config=PunctuationEndpointingConfig(),
+        sampling_rate=DEFAULT_SAMPLING_RATE,
+        audio_encoding=DEFAULT_AUDIO_ENCODING,
+        chunk_size=DEFAULT_CHUNK_SIZE,
     )
 
-    custom_agent = ChatGPTAgent(
-        ChatGPTAgentConfig(
-            initial_message=BaseMessage(text=INITIAL_MESSAGE),
-            prompt_preamble=PROMPT_PREAMBLE,
-            track_bot_sentiment=True,
-        )
+    custom_agent_config = ChatGPTAgentConfig(
+        initial_message=BaseMessage(text=INITIAL_MESSAGE),
+        prompt_preamble=PROMPT_PREAMBLE,
+        end_conversation_on_goodbye=True,
     )
 
-    custom_synthesizer = AzureSynthesizer(
-        AzureSynthesizerConfig(
-            sampling_rate=DEFAULT_SAMPLING_RATE,
-            audio_encoding=DEFAULT_AUDIO_ENCODING,
-        )
+    custom_synthesizer_config = AzureSynthesizerConfig(
+        sampling_rate=DEFAULT_SAMPLING_RATE,
+        audio_encoding=DEFAULT_AUDIO_ENCODING,
     )
 
     custom_inbound_call_config: InboundCallConfig = InboundCallConfig(
         url="/inbound",
         twilio_config=custom_twilio_config,
-        transcriber_config=custom_transcriber.get_transcriber_config(),
-        agent_config=custom_agent.get_agent_config(),
-        synthesizer_config=custom_synthesizer.get_synthesizer_config(),
+        transcriber_config=custom_transcriber_config,
+        agent_config=custom_agent_config,
+        synthesizer_config=custom_synthesizer_config,
     )
 
     return TelephonyServer(
