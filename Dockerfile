@@ -25,7 +25,8 @@ COPY pyproject.toml poetry.lock /app/
 RUN poetry install --no-interaction --no-ansi
 
 # Copy the content of the local directory to the working directory
-COPY . /app/
+COPY patient_intake_agent/ /app/patient_intake_agent
+COPY main.py /app/
 
 EXPOSE 3000
 # Specify the command to run on container start
