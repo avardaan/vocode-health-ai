@@ -21,15 +21,20 @@ class InboundCallEventsManager(events_manager.EventsManager):
         transcript_str = transcript_complete_event.transcript.to_string(
             include_timestamps=False
         )
-        # get structured patient data from unstructured transcript
+        # get structured patient data from unstructured transcript using AI
         parsed_patient_data = get_patient_data_from_transcript(
             transcript_str, PATIENT_DATA_WITH_APPOINTMENT
         )
         logger.info(parsed_patient_data)
+        # validate parsed patient data
+        if not parsed_patient_data:
+            logger.error("Error retrieving patient data from transcript")
+            return
 
         patient_phone_number = parsed_patient_data.get("contact").get("phone")
         patient_first_name = parsed_patient_data.get("first_name")
         patient_appointment = parsed_patient_data.get("appointment")
+        # send appointment confirmation SMS
         send_appointment_sms(
             patient_phone_number, patient_first_name, patient_appointment
         )
