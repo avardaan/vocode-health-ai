@@ -11,10 +11,10 @@ def post_call_handler(transcript_complete_event: TranscriptCompleteEvent):
     transcript_str = transcript_complete_event.transcript.to_string(
         include_timestamps=False
     )
-    logger.info(transcript_str)
-    gpt_response = get_patient_data_from_transcript(
+    parsed_patient_data = get_patient_data_from_transcript(
         transcript_str, PATIENT_DATA_WITH_APPOINTMENT
     )
+    logger.info(f"patient_data - {parsed_patient_data}")
 
 
 class InboundCallEventsManager(events_manager.EventsManager):
