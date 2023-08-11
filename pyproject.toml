@@ -7,10 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
-vocode = {extras = ["io"], version = "^0.1.110"}
-python-dotenv = "^1.0.0"
-redis = "^4.6.0"
 twilio = "^8.5.0"
+vocode = {version = "0.1.110", extras = ["io"]}
+redis = "^4.6.0"
 
 
 [build-system]

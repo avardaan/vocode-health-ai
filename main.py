@@ -1,12 +1,8 @@
 import os
-from dotenv import load_dotenv
 from fastapi import FastAPI
 import vocode
 
 from patient_intake_agent.inbound_call_engine import create_inbound_telephony_server
-
-# load environment variables from .env file
-load_dotenv()
 
 vocode.setenv(
     BASE_URL=os.getenv("BASE_URL"),
