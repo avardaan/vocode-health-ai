@@ -21,7 +21,8 @@ class InboundCallEventsManager(events_manager.EventsManager):
         transcript_str = transcript_complete_event.transcript.to_string(
             include_timestamps=False
         )
-        # get structured patient data from unstructured transcript using AI
+        # get structured patient data from unstructured transcript
+        # TODO: persist parsed patient data
         parsed_patient_data = get_patient_data_from_transcript(
             transcript_str, PATIENT_DATA_WITH_APPOINTMENT
         )
@@ -40,8 +41,11 @@ class InboundCallEventsManager(events_manager.EventsManager):
         )
 
     def handle_event(self, event: Event):
+        # TODO: get caller number from CallConfig?
         if event.type == EventType.TRANSCRIPT_COMPLETE:
             transcript_complete_event = typing.cast(TranscriptCompleteEvent, event)
+            # TODO: persist transcript
+            # handle post call processing
             self.post_call_handler(transcript_complete_event)
 
 
