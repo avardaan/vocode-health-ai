@@ -23,24 +23,6 @@ PATIENT_DATA_TO_COLLECT = {
     },
 }
 
-# TODO: derive programmatically from PATIENT_DATA_JSON
-PATIENT_DATA_FIELDS = [
-    "first_name",
-    "last_name",
-    "insurance.payer_name",
-    "insurance.member_id",
-    "referral.has_referral",
-    "referral.to_provider",
-    "chief_complaint",
-    "address.street",
-    "address.unit",
-    "address.city",
-    "address.state",
-    "address.zip",
-    "contact.phone",
-    "contact.email",
-]
-
 AVAILABLE_APPOINTMENTS = [
     {
         "provider": "John Doe",
@@ -54,25 +36,55 @@ AVAILABLE_APPOINTMENTS = [
     },
 ]
 
+PATIENT_DATA_WITH_APPOINTMENT = {
+    **PATIENT_DATA_TO_COLLECT,
+    "appointment": {
+        "provider": None,
+        "date": None,
+        "time": None,
+    },
+}
+
+# TODO: derive programmatically from PATIENT_DATA_TO_COLLECT
+PATIENT_DATA_FIELDS = [
+    "first_name",
+    "last_name",
+    "insurance_payer_name",
+    "insurance_member_id",
+    "referral_has_referral",
+    "referral_to_provider",
+    "chief_complaint",
+    "address_street",
+    "address_unit",
+    "address_city",
+    "address_state",
+    "address_zip",
+    "contact_phone",
+    "contact_email",
+]
+
+
 INITIAL_MESSAGE = "Hello! I am Vardaan, your intake agent. \
   To help you get the care you need, I will be asking you a series of questions to process your registration. \
     Once you are registered, I will help you schedule an appointment with a doctor. To begin, please say ok."
 
-AGENT_GOAL_DESCRIPTION = f"""Retrieve patient information sequentially by going through the provided fields. Once all fields are retrieved,
+AGENT_GOAL_DESCRIPTION = f"""Retrieve patient information by going through the provided fields. Do not stop until you 
+have collected information about all the fields Once all fields are retrieved,
 help the patient schedule an appointment with a doctor."""
 
 # preamble based on vocode InformationRetrievalAgent
 PROMPT_PREAMBLE = f"""
-        You are a friendly phone bot built for information intake via inbound calls from patients.
-        You will go through a list of fields to collect information from the user. After collecting each
-        field, you will ask for confirmation, then move on to the next field. Once all fields have been collected, help the 
-        patient schedule an appointment with a doctor.
+    You are a friendly phone bot built for information intake via inbound calls from patients.
+    Step 1: You will go through a list of fields and collect information about each field from the user.
+    Step 2: Once all fields have been collected, help the user schedule an appointment with a doctor.
+    You will not stop until you have collected information about all the fields and scheduled an appointment. After each response by the user,
+    you will ask the next question in the list until all fields have been collected.
 
-Here is the context for the call:
-Intended goal: {AGENT_GOAL_DESCRIPTION}
-Information to be collected in order sequentially: {PATIENT_DATA_FIELDS}
-Available appointments with doctors: {AVAILABLE_APPOINTMENTS}
+    Here is the context for the call:
+    Intended goal: {AGENT_GOAL_DESCRIPTION}
+    Information to be collected in order sequentially: {PATIENT_DATA_TO_COLLECT}
+    Available appointments with doctors: {AVAILABLE_APPOINTMENTS}
 
-Do not answer questions that are not relevant to the  intended goal. If the caller is not cooperative, 
-gently bring them back on track.
-        """
+    Do not answer questions that are not relevant to the  intended goal. If the caller is not cooperative, 
+    gently bring them back on track.
+"""

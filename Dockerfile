@@ -21,15 +21,17 @@ WORKDIR /app
 # Copy the `pyproject.toml` and `poetry.lock` to install dependencies
 COPY pyproject.toml poetry.lock /app/
 
-# run app without venv
+# do not create venv in container
 RUN poetry config virtualenvs.create false
+
 # install dependencies
 RUN poetry install --no-interaction --no-ansi
 
-# Copy the content of the local directory to the working directory
+# Copy source code into container
 COPY patient_intake_agent/ /app/patient_intake_agent
 COPY main.py /app/
 
 EXPOSE 3000
+
 # Specify the command to run on container start
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000"]
