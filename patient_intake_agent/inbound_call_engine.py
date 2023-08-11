@@ -33,6 +33,7 @@ def create_inbound_telephony_server() -> TelephonyServer:
     )
 
     custom_agent_config = ChatGPTAgentConfig(
+        model_name="gpt-3.5-turbo",
         temperature=1.0,
         max_tokens=3072,
         allowed_idle_time_seconds=30,
