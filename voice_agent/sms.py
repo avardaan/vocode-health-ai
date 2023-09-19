@@ -1,6 +1,6 @@
 import os
 from twilio.rest import Client
-from patient_intake_agent.logger import logger
+from voice_agent.logger import logger
 
 
 # TODO: IMPROVE ERROR HANDLING

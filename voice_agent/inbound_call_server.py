@@ -12,9 +12,9 @@ from vocode.streaming.telephony.config_manager.in_memory_config_manager import (
 )
 from vocode.streaming.models.telephony import TwilioConfig
 
-from patient_intake_agent.constants import INITIAL_MESSAGE, PROMPT_PREAMBLE
-from patient_intake_agent.logger import logger
-from patient_intake_agent.events_manager import inbound_call_events_manager
+from voice_agent.constants import INITIAL_MESSAGE, PROMPT_PREAMBLE
+from voice_agent.logger import logger
+from voice_agent.events_manager import inbound_call_events_manager
 
 
 def create_inbound_telephony_server() -> TelephonyServer:

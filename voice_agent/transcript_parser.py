@@ -1,7 +1,7 @@
 import json
 import os
 import openai
-from patient_intake_agent.logger import logger
+from voice_agent.logger import logger
 
 
 # TODO: MORE ERROR HANDLING

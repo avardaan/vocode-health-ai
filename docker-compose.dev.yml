@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   inbound-server:
-    image: assort-takehome
+    image: vocode-health-ai
     ports:
       - '3000:3000'
     env_file:

@@ -1,11 +1,11 @@
 import typing
-from patient_intake_agent.logger import logger
+from voice_agent.logger import logger
 from vocode.streaming.utils import events_manager
 from vocode.streaming.models.events import Event, EventType
 from vocode.streaming.models.transcript import TranscriptCompleteEvent
-from patient_intake_agent.transcript_parser import get_patient_data_from_transcript
-from patient_intake_agent.constants import PATIENT_DATA_WITH_APPOINTMENT
-from patient_intake_agent.sms import send_appointment_sms
+from voice_agent.transcript_parser import get_patient_data_from_transcript
+from voice_agent.constants import PATIENT_DATA_WITH_APPOINTMENT
+from voice_agent.sms import send_appointment_sms
 
 
 class InboundCallEventsManager(events_manager.EventsManager):

@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 import vocode
 
-from patient_intake_agent.inbound_call_engine import create_inbound_telephony_server
+from voice_agent.inbound_call_server import create_inbound_telephony_server
 
 vocode.setenv(
     BASE_URL=os.getenv("BASE_URL"),
