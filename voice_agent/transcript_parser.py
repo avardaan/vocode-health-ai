@@ -4,7 +4,7 @@ import openai
 from voice_agent.logger import logger
 
 
-# TODO: MORE ERROR HANDLING
+# TODO: IMPROVE ERROR HANDLING
 def get_patient_data_from_transcript(call_transcript: str, structured_output: dict):
     openai.api_key = os.getenv("OPENAI_API_KEY")
     structured_output_json = json.dumps(structured_output)
