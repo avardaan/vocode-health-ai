@@ -28,7 +28,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi
 
 # Copy source code into container
-COPY patient_intake_agent/ /app/patient_intake_agent
+COPY voice_agent/ /app/voice_agent
 COPY main.py /app/
 
 EXPOSE 3000
