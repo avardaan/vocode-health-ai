@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "patient-intake-agent"
+name = "vocode-ai-agent"
 version = "0.1.0"
 description = ""
 authors = ["avardaan <oyevardaan@gmail.com>"]

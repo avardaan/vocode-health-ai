@@ -40,7 +40,7 @@ Once you have answered all questions, I will help you schedule an appointment wi
 To begin, please say ok."""
 
 AGENT_GOAL_DESCRIPTION = f"""Retrieve patient information by going through the provided fields. Do not stop until you 
-have collected values for all the fields. Once all fields are retrieved,
+have collected values for all the fields. Once all field values are collected,
 help the patient schedule an appointment with a doctor."""
 
 # preamble based on vocode InformationRetrievalAgent
