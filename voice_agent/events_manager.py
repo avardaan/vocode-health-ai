@@ -36,9 +36,11 @@ class InboundCallEventsManager(events_manager.EventsManager):
         patient_first_name = parsed_patient_data.get("first_name")
         patient_appointment = parsed_patient_data.get("appointment")
         # send appointment confirmation SMS
+        '''
         send_appointment_sms(
             patient_phone_number, patient_first_name, patient_appointment
         )
+        '''
 
     def handle_event(self, event: Event):
         # TODO: get caller number from CallConfig?
